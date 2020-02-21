@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-subtitle>
+    <mat-toolbar>
+      <mat-card-actions>
+        <button mat-flat-button (click)="read_Data(headid)" color="accent">読込</button>
+        <button mat-raised-button routerLink="/tab02" color="warn">パッキングリストへ</button>
+      </mat-card-actions>
+    </mat-toolbar>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <mat-select [placeholder]="placehold" [(value)]="headid">
+      <ng-container *ngFor="let hd of headerservice.getHeader()">
+        <mat-option value="{{ hd.headid }}">{{ hd.indate }} {{ hd.venname }} {{ hd.cnt }}カートン {{ hd.status }}</mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-card-content>
+</mat-card>
+<ng-container *ngIf="headid">
+  <mat-card>
+    <mat-card-subtitle>
+      <mat-toolbar>読込データ</mat-toolbar>
+    </mat-card-subtitle>
+    <form fxLayout="row wrap" fxLayoutGap="20px">
+      <mat-form-field>
+        <input matInput placeholder="入荷日" [(value)]="this.headerservice.header.indate" disabled>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="仕入先名称" [(value)]="this.headerservice.header.venname" disabled>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="カートン数" [value]="this.headerservice.header.cnt" disabled>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="データ作成日時" [value]="this.headerservice.header.created_at | date:'yy/MM/dd HH:mm'" disabled>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="読込時ステータス" [value]="this.headerservice.header.status" disabled>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="headid" [value]="headid" disabled>
+      </mat-form-field>
+    </form>
+  </mat-card>
+</ng-container>
