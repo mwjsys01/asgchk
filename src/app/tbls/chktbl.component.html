@@ -1,4 +1,10 @@
 <div class="mat-elevation-z8">
+  <mat-paginator #paginators
+      [length]="dataSource?.data.length"
+      [pageIndex]="0"
+      [pageSize]="50"
+      [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
   <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
     <ng-container matColumnDef="pacno">
       <th mat-header-cell *matHeaderCellDef>PackingNo</th>
@@ -31,11 +37,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-
-  <mat-paginator #paginators
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
 </div>
