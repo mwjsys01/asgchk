@@ -5,6 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
+// import { HammerModule, HAMMER_GESTURE_CONFIG, HAMMER_LOADER } from '@angular/platform-browser';
+// import { GestureConfig } from '@angular/material/core';
+// import { HAMMER_PROVIDERS } from '@angular/platform-browser'
 
 import { GraphQLModule } from './graph-ql/graph-ql.module';
 import { Tab01Component } from './tabs/tab01.component';
@@ -24,10 +29,12 @@ import { ChktblComponent } from './tbls/chktbl.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    FormsModule,
     GraphQLModule,
+    // HammerModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,26 @@
+<mat-toolbar>
+  <form fxLayout="row wrap" fxLayoutGap="20px">
+    <mat-card-actions>
+      <button type="button" mat-raised-button color="warn" routerLink="/tab01">入荷データ選択画面へ</button>
+      <button type="button" mat-flat-button (click)="save_Data()" color="accent">データ保存</button>
+    </mat-card-actions>
+    <mat-form-field>
+      <input matInput placeholder="総カートン数" value="{{this.packservice.sctn}}" disabled>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="OKカートン数" value="{{this.packservice.okct}}" disabled>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="NGカートン数" value="{{this.packservice.ngct}}" disabled>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="未チェック数" value="{{this.packservice.sctn - this.packservice.okct - this.packservice.ngct}}" disabled>
+    </mat-form-field>
+  </form>
+</mat-toolbar>
 <mat-card>
   <mat-card-subtitle>
-    <mat-toolbar>
-      <mat-card-actions>
-        <button mat-raised-button color="warn" routerLink="/tab01">入荷データ選択画面</button>
-      </mat-card-actions>
-    </mat-toolbar>
+
   </mat-card-subtitle>
   <mat-card-content>
     <app-chktbl></app-chktbl>
