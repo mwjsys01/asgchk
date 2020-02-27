@@ -35,7 +35,7 @@ export class HeaderService {
   constructor(private apollo: Apollo) { }
 
   getHeader(): Header[] { return this.headers; }
-  QueryHeaders(){
+  queryHeaders(){
     let HeaderSub;
     this.apollo.watchQuery<any>({
       query: Query.GetQuery1,

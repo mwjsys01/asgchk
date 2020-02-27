@@ -2,13 +2,14 @@
   <mat-card-subtitle>
     <mat-toolbar>
       <mat-card-actions>
-        <button type="button" mat-flat-button (click)="read_Data(headid)" color="accent">読込</button>
-        <button type="button" mat-raised-button routerLink="/tab02" color="warn">パッキングリストチェック画面へ</button>
+        <!-- <button type="button" mat-flat-button (click)="read_Data(headid)" color="accent">入荷データ読込</button> -->
+        <button type="button" mat-raised-button routerLink="/tab02" color="warn">チェック画面へ</button>
+        <button type="button" mat-flat-button (click)="get_Header()">選択項目再取得</button>
       </mat-card-actions>
     </mat-toolbar>
   </mat-card-subtitle>
   <mat-card-content>
-    <mat-select [placeholder]="placehold" [(value)]="headid">
+    <mat-select [placeholder]="placehold" [(value)]="headid" (selectionChange)="selChange($event)">
       <ng-container *ngFor="let hd of headerservice.getHeader()">
         <mat-option value="{{ hd.headid }}">{{ hd.indate }} {{ hd.venname }} {{ hd.cnt }}カートン {{ hd.status }}</mat-option>
       </ng-container>
@@ -22,19 +23,19 @@
     </mat-card-subtitle>
     <form fxLayout="row wrap" fxLayoutGap="20px">
       <mat-form-field>
-        <input matInput placeholder="入荷日" [(value)]="this.headerservice.header.indate" disabled>
+        <input matInput placeholder="入荷日" [(value)]="headerservice.header.indate" disabled>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="仕入先名称" [(value)]="this.headerservice.header.venname" disabled>
+        <input matInput placeholder="仕入先名称" [(value)]="headerservice.header.venname" disabled>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="カートン数" [value]="this.headerservice.header.cnt" disabled>
+        <input matInput placeholder="カートン数" [value]="headerservice.header.cnt" disabled>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="データ作成日時" [value]="this.headerservice.header.created_at | date:'yy/MM/dd HH:mm'" disabled>
+        <input matInput placeholder="データ作成日時" [value]="headerservice.header.created_at | date:'yy/MM/dd HH:mm'" disabled>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="読込時ステータス" [value]="this.headerservice.header.status" disabled>
+        <input matInput placeholder="読込時ステータス" [value]="headerservice.header.status" disabled>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="headid" [value]="headid" disabled>

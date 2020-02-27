@@ -1,8 +1,8 @@
 <mat-toolbar>
-  <form fxLayout="row wrap" fxLayoutGap="20px">
+  <form fxLayout="row">
     <mat-card-actions>
-      <button type="button" mat-raised-button color="warn" routerLink="/tab01">入荷データ選択画面へ</button>
-      <button type="button" mat-flat-button (click)="save_Data()" color="accent">データ保存</button>
+      <button type="button" mat-raised-button color="warn" routerLink="/tab01">前画面へ</button>
+      <button type="button" mat-flat-button (click)="save_Data()" color="accent">保存</button>
     </mat-card-actions>
     <mat-form-field>
       <input matInput placeholder="総カートン数" value="{{this.packservice.sctn}}" disabled>
@@ -19,9 +19,6 @@
   </form>
 </mat-toolbar>
 <mat-card>
-  <mat-card-subtitle>
-
-  </mat-card-subtitle>
   <mat-card-content>
     <app-chktbl></app-chktbl>
   </mat-card-content>

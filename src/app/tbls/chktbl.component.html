@@ -1,10 +1,12 @@
 <div class="mat-elevation-z8" (swipe)="swipe($event.type)">
-  <mat-paginator #paginators
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
+  <!-- <mat-toolbar> -->
+    <mat-paginator #paginators
+        [length]="dataSource?.data.length"
+        [pageIndex]="0"
+        [pageSize]="1000"
+        [pageSizeOptions]="[25, 50, 100, 250, 1000]">
+    </mat-paginator>
+  <!-- </mat-toolbar> -->
   <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements" >
     <ng-container matColumnDef="pacno">
       <th mat-header-cell *matHeaderCellDef>PackingNo</th>
@@ -24,17 +26,17 @@
     </ng-container>
     <ng-container matColumnDef="realg">
       <th mat-header-cell *matHeaderCellDef>入荷商品</th>
-      <td mat-cell *matCellDef="let row;let i = index">
+      <td mat-cell *matCellDef="let row">
         <mat-form-field>
-          <input matInput type="text" [(ngModel)]="row.realg" (keyup.enter)="onEnter()" (blur)="updateList(i+(paginator.pageIndex * paginator.pageSize), 'realg', 'gcode', row.realg)">
+          <input matInput type="text" [(ngModel)]="row.realg" (keyup.enter)="onEnter()" (blur)="updateList(row,'realg','gcode')">
         </mat-form-field>
       </td>
     </ng-container>
     <ng-container matColumnDef="realq">
       <th mat-header-cell *matHeaderCellDef>入荷数量</th>
-      <td mat-cell *matCellDef="let row;let i = index">
+      <td mat-cell *matCellDef="let row">
         <mat-form-field>
-          <input matInput numberInput [(ngModel)]="row.realq" (keyup.enter)="onEnter()" (blur)="updateList(i+(paginator.pageIndex * paginator.pageSize), 'realq', 'quant', row.realq)">
+          <input matInput numberInput [(ngModel)]="row.realq" (keyup.enter)="onEnter()" (blur)="updateList(row,'realq','quant')">
         </mat-form-field>
       </td>
     </ng-container>

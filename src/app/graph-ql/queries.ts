@@ -16,7 +16,7 @@ query get_head {
 export const UpdateStatus = gql`
 mutation update_status($headid: Int!,$now: timestamptz!) {
   update_tblheader(where: {headid: {_eq: $headid}},
-                   _set: {status: "EDIT", updated_at: $now}) {
+                   _set: {status: "edit", updated_at: $now}) {
     affected_rows
   }
 }`;
@@ -24,10 +24,18 @@ export const GetQuery2 = gql`
 query get_detail($headid: Int!) {
   tbldetail(where: {headid: {_eq: $headid}}, order_by: {packno: asc}) {
     packno
+    detid
     gcode
     quant
     realg
     realq
-    result 
+    result
+  }
+}`;
+export const UpdateDetail = gql`
+mutation update_detail($headid: Int!,$now: timestamptz!) {
+  update_tbletail(where: {headid: {_eq: $headid}},
+                   _set: {status: "edit", updated_at: $now}) {
+    affected_rows
   }
 }`;

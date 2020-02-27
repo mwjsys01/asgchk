@@ -24,6 +24,7 @@ export interface Chktbl {
   realg: string;
   realq: number;
   result: string;
+  rowid: number;
 }
 
 @Injectable({
@@ -90,13 +91,14 @@ export class PackService {
         } else {
           lcrowsp = 0;
         }
-      　const chk:Chktbl = {pacno: lcpacno,
+        const chk:Chktbl = {pacno: lcpacno,
                             rowsp: lcrowsp,
                             gcode: this.pack[i].detas[j].gcode,
                             quant: this.pack[i].detas[j].quant,
                             realg: this.pack[i].detas[j].realg,
                             realq: this.pack[i].detas[j].realq,
-                            result: this.pack[i].detas[j].result
+                            result: this.pack[i].detas[j].result,
+                            rowid: this.pack[i].detas[j].rowid
                             };
         this.chktbl.push(chk);
       }

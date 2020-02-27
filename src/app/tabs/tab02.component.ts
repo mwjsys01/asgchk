@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HeaderService } from '../services/header.service';
 import { PackService } from '../services/pack.service';
 import { Apollo } from 'apollo-angular';
@@ -18,9 +18,27 @@ export class Tab02Component implements OnInit {
               ) { }
 
   ngOnInit(): void {
+    
+    console.log("tab02_ngoninit",new Date());
   }
 
-  save_Data(){
-    console.log(this.headerservice)
+  ngAfterViewInit(): void {
+    console.log("tab02_afterviewinit",new Date());
+  }
+
+  save_Data(): void {
+    this.apollo.mutate<any>({
+    mutation: Query.UpdateStatus,
+    variables: { 
+      headid: this.headerservice.header.headid ,
+      now : new Date()
+      },
+    }).subscribe(({ data }) => {
+      console.log('updated data', data);
+    },(error) => {
+      console.log('there was an error sending the query', error);
+    });
+
+
   }
 }

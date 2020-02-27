@@ -31,6 +31,10 @@ export class Tab01Component implements OnInit {
     this.placehold = 'データ選択';
     this.get_Header();
   }
+  selChange(event:any): void {
+    // console.log(event);
+    this.read_Data(event.value);
+  }
   read_Data(value:number):void {
     if ( value === 0 ){
       confirm("読込データを選択してください!!")
@@ -53,17 +57,17 @@ export class Tab01Component implements OnInit {
             realg:data.tbldetail[i].realg,
             realq:+data.tbldetail[i].realq,
             result:data.tbldetail[i].result,
-            rowid:i };
+            rowid:+data.tbldetail[i].detid };
           this.packservice.addPack(data.tbldetail[i].packno,adDet); 
         }
         this.packservice.subject.next();
-        // console.log(this.packservice);
-        // console.log(this.packservice.getChktbl());
+        console.log(this.packservice.getChktbl());
       });
     }
   }
   get_Header():void {
-    this.headerservice.QueryHeaders()
+    this.headerservice.headers = new Array();
+    this.headerservice.queryHeaders()
       .subscribe(({ tblheader }) => {
         // console.log('tab01.ts',tblheader);
         this.headerservice.headers = tblheader;
@@ -73,5 +77,6 @@ export class Tab01Component implements OnInit {
           this.placehold = 'データ選択';
         }
       });
+    // console.log("get_header",this.headerservice.headers);
   }
 }

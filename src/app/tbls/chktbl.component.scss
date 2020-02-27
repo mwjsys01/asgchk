@@ -5,3 +5,11 @@
     padding-bottom: 0em;
 }
 ::ng-deep .mat-form-field-underline { display: none; }
+
+// mat-toolbar {
+//     position: sticky;
+//     position: -webkit-sticky; /* For macOS/iOS Safari */
+//     top: 0; /* Sets the sticky toolbar to be on top */
+//     padding-top:10px;
+//     z-index: 100; /* Ensure that your app's content doesn't overlap the toolbar */
+// }

@@ -26,9 +26,11 @@ export class ChktblComponent implements OnInit {
   ngOnInit(): void {
     //他コンポーネントからの更新
     this.packservice.observe.subscribe(() => this.updateData());
+    console.log("chktbl_oninit",new Date());
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    console.log("chktbl_afterviewinit",new Date());
     // this.dataSource.sort = this.sort;
   }
   
@@ -37,11 +39,11 @@ export class ChktblComponent implements OnInit {
     this.updateData();
   }
 
-  updateList(i: number, pr1: string, pr2: string, value: any){
-    if (value == 0 || value == ''){ return; }
-    let j:number = this.packservice.pack.findIndex(obj => obj.pacno == this.packservice.chktbl[i].pacno);
-    let k:number = this.packservice.pack[j].detas.findIndex(obj => obj.rowid == i);
-    this.packservice.pack[j].detas[k][pr1] = value;
+  updateList(row: Chktbl, pr1: string, pr2: string){
+    if (row[pr1] == 0 || row[pr1] == ''){ return; }
+    let j:number = this.packservice.pack.findIndex(obj => obj.pacno == row.pacno);
+    let k:number = this.packservice.pack[j].detas.findIndex(obj => obj.rowid == row.rowid);
+    this.packservice.pack[j].detas[k][pr1] = row[pr1];
     if (this.packservice.pack[j].detas[k][pr1] != this.packservice.pack[j].detas[k][pr2]) {
       this.packservice.pack[j].detas[k].result = 'NG';
       this.packservice.pack[j].resul = 'NG';
@@ -57,7 +59,7 @@ export class ChktblComponent implements OnInit {
     this.updateData();
   }
   onEnter(): void {
-    console.log("Enter",this.elementRef.nativeElement.querySelector('input'));
+    console.log("Enter",this.elementRef.nativeElement.querySelector('button'));
     this.elementRef.nativeElement.querySelector('button').focus();
   }
   swipe(eType){
