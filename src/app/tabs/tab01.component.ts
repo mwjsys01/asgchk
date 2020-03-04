@@ -61,7 +61,7 @@ export class Tab01Component implements OnInit {
           this.packservice.addPack(data.tbldetail[i].packno,adDet); 
         }
         this.packservice.subject.next();
-        console.log(this.packservice.getChktbl());
+        // console.log(this.packservice.getChktbl());
       });
     }
   }

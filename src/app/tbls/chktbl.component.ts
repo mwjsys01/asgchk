@@ -11,7 +11,6 @@ import { Chktbl,PackService } from '../services/pack.service';
 })
 export class ChktblComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  // @ViewChild("paginators", {static: false}) toFocus: ElementRef;
 
   dataSource:MatTableDataSource<Chktbl>;
 
@@ -25,41 +24,65 @@ export class ChktblComponent implements OnInit {
 
   ngOnInit(): void {
     //他コンポーネントからの更新
-    this.packservice.observe.subscribe(() => this.updateData());
-    console.log("chktbl_oninit",new Date());
+    
+    // console.log("chktbl_oninit",new Date());
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    console.log("chktbl_afterviewinit",new Date());
+    setTimeout(() => {
+      this.packservice.observe.subscribe(() => this.updateData());
+    });
+      // console.log("chktbl_afterviewinit",new Date());
     // this.dataSource.sort = this.sort;
+
   }
   
   checkPac(i: number): void {
     this.packservice.setOk(i);
+    // console.log("tbldata編集後",new Date())
     this.updateData();
   }
 
   updateList(row: Chktbl, pr1: string, pr2: string){
     if (row[pr1] == 0 || row[pr1] == ''){ return; }
-    let j:number = this.packservice.pack.findIndex(obj => obj.pacno == row.pacno);
+    const ctnno = row.pacno.split('-');
+    let j:number = this.packservice.pack.findIndex(obj => obj.pacno == ctnno[0]);
     let k:number = this.packservice.pack[j].detas.findIndex(obj => obj.rowid == row.rowid);
     this.packservice.pack[j].detas[k][pr1] = row[pr1];
     if (this.packservice.pack[j].detas[k][pr1] != this.packservice.pack[j].detas[k][pr2]) {
       this.packservice.pack[j].detas[k].result = 'NG';
-      this.packservice.pack[j].resul = 'NG';
+      // this.packservice.pack[j].resul = 'NG';
     } else if (this.packservice.pack[j].detas[k][pr1]===this.packservice.pack[j].detas[k][pr2]) {  
       this.packservice.pack[j].detas[k].result = 'OK';
-      this.packservice.pack[j].resul = 'OK';
-      for(let l = 0; l < this.packservice.pack[j].detas.length; l++) {
-        if ( this.packservice.pack[j].detas[k].result === 'NG' ){
-          this.packservice.pack[j].resul = 'NG';
-        }
+      // this.packservice.pack[j].resul = 'OK';
+      // for(let l = 0; l < this.packservice.pack[j].detas.length; l++) {
+      //   if ( this.packservice.pack[j].detas[k].result === 'NG' ){
+      //     this.packservice.pack[j].resul = 'NG';
+      //   }
+      // }
+    }
+    let flgng: Boolean = false;
+    let flgmi: Boolean = false;
+    for(let l=0; l < this.packservice.pack[j].detas.length; l++) {
+      if (this.packservice.pack[j].detas[l].result ==='NG' ) {
+        flgng = true;
+      } else if (this.packservice.pack[j].detas[l].result ===' ' ) {
+        flgmi = true;
+      // } else if (this.pack[j].detas[k].result ==='OK' ) {
+      //   flgok = true;
       }
+    }
+    if (flgng) {
+      this.packservice.pack[j].resul = 'NG';
+    } else if (flgmi) {
+      this.packservice.pack[j].resul = ' ';
+    } else {
+      this.packservice.pack[j].resul = 'OK';
     }
     this.updateData();
   }
   onEnter(): void {
-    console.log("Enter",this.elementRef.nativeElement.querySelector('button'));
+    // console.log("Enter",this.elementRef.nativeElement.querySelector('button'));
     this.elementRef.nativeElement.querySelector('button').focus();
   }
   swipe(eType){
@@ -79,6 +102,8 @@ export class ChktblComponent implements OnInit {
   updateData(): void {
     //tableのデータソース更新
     this.dataSource= new MatTableDataSource<Chktbl>(this.packservice.getChktbl());
+    // this.dataSource = this.packservice.getChktbl();
+    // console.log("chktbl.ts updateData 終わり",new Date())
     this.dataSource.paginator = this.paginator;
     // console.log(this.packservice.getChktbl());
   }

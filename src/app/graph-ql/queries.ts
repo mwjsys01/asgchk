@@ -33,9 +33,9 @@ query get_detail($headid: Int!) {
   }
 }`;
 export const UpdateDetail = gql`
-mutation update_detail($headid: Int!,$now: timestamptz!) {
-  update_tbletail(where: {headid: {_eq: $headid}},
-                   _set: {status: "edit", updated_at: $now}) {
+mutation update_detail($detid: Int!,$res: String,$reg: String,$req: Int) {
+  update_tbldetail(where: {detid: {_eq: $detid}},
+                   _set: {result: $res, realg: $reg, realq: $req}) {
     affected_rows
   }
 }`;
