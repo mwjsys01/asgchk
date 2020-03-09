@@ -10,8 +10,11 @@
     padding-bottom: 50px;
 }
 
-// ::ng-deep .mat-table thead {
-//     position: sticky; /* For macOS/iOS Safari */
-//     top: 0;
-//     z-index: 9999;
-// }
+mat-toolbar {
+    position: sticky;
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 100; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+mat-toolbar .mat-form-field {
+    width: 5em;
+}

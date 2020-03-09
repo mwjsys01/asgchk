@@ -1,12 +1,16 @@
 <div class="mat-elevation-z8" (swipe)="swipe($event.type)">
-  <!-- <mat-toolbar> -->
+  <mat-toolbar>
+    <mat-form-field>
+      <input type="tel" matInput numberInput [(ngModel)]="ctnno">
+    </mat-form-field>
+    <button type="button" mat-raised-button color="warn" (click)="goCtn(ctnno)">Ctnへ</button>
     <mat-paginator #paginators
         [length]="dataSource?.data.length"
         [pageIndex]="0"
-        [pageSize]="50"
+        [pageSize]="10"
         [pageSizeOptions]="[25, 50, 100, 250, 1000]">
     </mat-paginator>
-  <!-- </mat-toolbar> -->
+  </mat-toolbar>
   <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements" >
     <ng-container matColumnDef="pacno">
       <th mat-header-cell *matHeaderCellDef>PackingNo</th>

@@ -13,7 +13,7 @@ export class ChktblComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   dataSource:MatTableDataSource<Chktbl>;
-
+  public ctnno:number;
   displayedColumns = ['pacno','gcode','quant','realg','realq','result'];
 
   constructor(public headerservice: HeaderService,
@@ -89,6 +89,16 @@ export class ChktblComponent implements OnInit {
     console.log(eType);
   }  
   
+  goCtn(ctnno:number): void {
+    let i:number = this.packservice.chktbl.findIndex(
+      obj => obj.pacno == ('000'+ctnno.toString()).slice(-4)
+      );
+    console.log(i,this.paginator.pageSize);
+    this.paginator.pageIndex = Math.floor( (i + 1) / this.paginator.pageSize );
+    console.log(this.paginator.pageIndex);
+    this.dataSource.paginator = this.paginator;
+  }
+
   setBgcolor(res: string): string {
     let color:string;
     if ( res === 'OK' ){
