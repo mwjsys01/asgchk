@@ -93,9 +93,9 @@ export class ChktblComponent implements OnInit {
     let i:number = this.packservice.chktbl.findIndex(
       obj => obj.pacno == ('000'+ctnno.toString()).slice(-4)
       );
-    console.log(i,this.paginator.pageSize);
+    // console.log(i,this.paginator.pageSize);
     this.paginator.pageIndex = Math.floor( (i + 1) / this.paginator.pageSize );
-    console.log(this.paginator.pageIndex);
+    // console.log(this.paginator.pageIndex);
     this.dataSource.paginator = this.paginator;
   }
 
