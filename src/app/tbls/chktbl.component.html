@@ -1,7 +1,7 @@
 <div class="mat-elevation-z8" (swipe)="swipe($event.type)">
   <mat-toolbar>
     <mat-form-field>
-      <input type="tel" matInput numberInput [(ngModel)]="ctnno">
+      <input type="tel" matInput numberInput [(ngModel)]="ctnno" (keyup.enter)="goCtn(ctnno)" (blur)="goCtn(ctnno)">
     </mat-form-field>
     <button type="button" mat-raised-button color="warn" (click)="goCtn(ctnno)">Ctnへ</button>
     <mat-paginator #paginators
