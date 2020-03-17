@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import * as Query from '../graph-ql/queries';
 
 export interface Detail {
   gcode: string;
@@ -40,7 +43,7 @@ export class PackService {
   public subject = new Subject<string>();
   public observe = this.subject.asObservable();
 
-  constructor() { }
+  constructor(private apollo: Apollo) { }
   resetPack() : void { this.pack = new Array(); }
   addPack(p_pacno:string,p_detas:Detail) : void {
     const ctnno = p_pacno.split('-');
@@ -58,24 +61,26 @@ export class PackService {
     }
   }
   setOk(i:number) : void {
+    // console.log("packservice_setOK",i)
     const ctnno = this.chktbl[i].pacno.split('-');
+    // console.log("packservice_setOK ctnno",ctnno[0])
     let j:number = this.pack.findIndex(obj => obj.pacno == ctnno[0]);
     let k:number = this.pack[j].detas.findIndex(obj => obj.rowid == this.chktbl[i].rowid);
-    if ( this.pack[j].detas[k].result === ' ') {
+    if ( this.pack[j].detas[k].result === 'TB') {
       this.pack[j].detas[k].realg = this.pack[j].detas[k].gcode;
       this.pack[j].detas[k].realq = this.pack[j].detas[k].quant;
       this.pack[j].detas[k].result = 'OK';
     } else {
       this.pack[j].detas[k].realg = ' ';
       this.pack[j].detas[k].realq = 0;
-      this.pack[j].detas[k].result = ' ';
+      this.pack[j].detas[k].result = 'TB';
     }
     let flgng: Boolean = false;
     let flgmi: Boolean = false;
     for(let l=0; l < this.pack[j].detas.length; l++) {
       if (this.pack[j].detas[l].result ==='NG' ) {
         flgng = true;
-      } else if (this.pack[j].detas[l].result ===' ' ) {
+      } else if (this.pack[j].detas[l].result ==='TB' ) {
         flgmi = true;
       // } else if (this.pack[j].detas[k].result ==='OK' ) {
       //   flgok = true;
@@ -84,11 +89,11 @@ export class PackService {
     if (flgng) {
       this.pack[j].resul = 'NG';
     } else if (flgmi) {
-      this.pack[j].resul = ' ';
+      this.pack[j].resul = 'TB';
     } else {
       this.pack[j].resul = 'OK';
     }
-
+    // this.makeChktbl();
     // if ( this.pack[j].detas[0].result === ' '){
     //   this.pack[j].resul = 'OK';
     //   for(let k=0; k < this.pack[j].detas.length; k++) {
@@ -104,8 +109,14 @@ export class PackService {
     //     this.pack[j].detas[k].result = ' ';
     //   }
     // }
-    console.log("setOK終わり",new Date())
+    // console.log("setOK終わり",new Date())
   }
+  // getChktbl():Chktbl[] {
+  //   this.makeChktbl();
+  //   // console.log(this.chktbl);
+  //   // console.log("getChktbl 終わり",new Date())
+  //   return this.chktbl;
+  // }
   getChktbl():Chktbl[] {
     this.chktbl = new Array();
     this.okct=0;
@@ -137,8 +148,22 @@ export class PackService {
       }
       this.sctn = i+1;
     }
-    // console.log(this.chktbl);
-    // console.log("getChktbl 終わり",new Date())
     return this.chktbl;
+  }
+  save_det(p_chk:Chktbl):void {
+    // console.log(p_chk);
+    this.apollo.mutate<any>({
+    mutation: Query.UpdateDetail,
+    variables: {
+      detid: p_chk.rowid ,
+      res : p_chk.result ,
+      reg : p_chk.realg ,
+      req : p_chk.realq
+      },
+    }).subscribe(({ data }) => {
+      console.log('updated detail', data);
+    },(error) => {
+      console.log('error UpdateDetail', error);
+    });
   }
 }

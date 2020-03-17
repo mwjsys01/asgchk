@@ -28,7 +28,7 @@ export class Tab01Component implements OnInit {
               private apollo: Apollo) { }
 
   ngOnInit(): void {
-    this.placehold = 'データ選択';
+    this.placehold = '入荷一覧読込中';
     this.get_Header();
   }
   selChange(event:any): void {
@@ -74,7 +74,7 @@ export class Tab01Component implements OnInit {
         if (tblheader.length == 0){
           this.placehold = '該当データなし';
         } else {
-          this.placehold = 'データ選択';
+          this.placehold = '入荷一覧';
         }
       });
     // console.log("get_header",this.headerservice.headers);

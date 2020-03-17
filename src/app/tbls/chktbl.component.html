@@ -1,10 +1,21 @@
 <div class="mat-elevation-z8" (swipe)="swipe($event.type)">
   <mat-toolbar>
-    <mat-form-field>
-      <input type="tel" matInput numberInput [(ngModel)]="ctnno" (keyup.enter)="goCtn(ctnno)" (blur)="goCtn(ctnno)">
+    <div [hidden]="dataSource.filteredData.length != this.packservice.chktbl.length">
+      <mat-form-field style="width:3em;">
+        <input type="tel" matInput numberInput [(ngModel)]="ctnno" (keyup.enter)="goCtn(ctnno)" (blur)="goCtn(ctnno)">
+      </mat-form-field>
+      <button type="button" mat-raised-button color="warn" (click)="goCtn(ctnno)" style="min-width:20px">Go</button>
+    </div>
+    <mat-form-field style="width:6em;">
+      <mat-label>品番Filter</mat-label>
+        <input type="url" [(ngModel)]="gcdfi" matInput (keyup)="applyFilter($event.target.value,'gcode')" placeholder="品番">
     </mat-form-field>
-    <button type="button" mat-raised-button color="warn" (click)="goCtn(ctnno)">Ctnへ</button>
+    <mat-form-field style="width:3em;">
+      <mat-label>結果Filter</mat-label>
+        <input type="url" [(ngModel)]="resfi"  matInput (keyup)="applyFilter($event.target.value,'result')" placeholder="結果">
+    </mat-form-field>
     <mat-paginator #paginators
+        itemsPerPageLabel="単位"
         [length]="dataSource?.data.length"
         [pageIndex]="0"
         [pageSize]="10"
@@ -16,13 +27,14 @@
       <th mat-header-cell *matHeaderCellDef>PackingNo</th>
       <!-- <td mat-cell *matCellDef="let row;let i = index" [attr.rowspan]="row.rowsp" [style.display]="row.rowsp === 0 ? 'none'  : ''"> -->
       <td mat-cell *matCellDef="let row;let i = index">
-        <button mat-raised-button focusable="false" (click)="checkPac(i + this.paginator.pageSize * this.paginator.pageIndex)">
+        <!-- <button mat-raised-button focusable="false" (click)="checkPac(i + this.paginator.pageSize * this.paginator.pageIndex)"> -->
+        <button mat-raised-button focusable="false" (click)="checkPac(row.rowid)">
           {{row.pacno}}
         </button>
       </td>
     </ng-container>
     <ng-container matColumnDef="gcode">
-      <th mat-header-cell *matHeaderCellDef>商品</th>
+      <th mat-header-cell *matHeaderCellDef>品番</th>
       <td mat-cell *matCellDef="let row">{{row.gcode}}</td>
     </ng-container>
     <ng-container matColumnDef="quant">

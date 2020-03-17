@@ -40,25 +40,25 @@ export class Tab02Component implements OnInit {
     });
     console.log(this.packservice.chktbl);
     for(let i = 0; i < this.packservice.chktbl.length; i++) {
-      this.save_det(this.packservice.chktbl[i]);
+      this.packservice.save_det(this.packservice.chktbl[i]);
     }
   }
 
-  save_det(p_chk:Chktbl):void {
-    console.log(p_chk);
-    this.apollo.mutate<any>({
-    mutation: Query.UpdateDetail,
-    variables: {
-      detid: p_chk.rowid ,
-      res : p_chk.result ,
-      reg : p_chk.realg ,
-      req : p_chk.realq
-      },
-    }).subscribe(({ data }) => {
-      console.log('updated detail', data);
-    },(error) => {
-      console.log('error UpdateDetail', error);
-    });
-  }
+  // save_det(p_chk:Chktbl):void {
+  //   console.log(p_chk);
+  //   this.apollo.mutate<any>({
+  //   mutation: Query.UpdateDetail,
+  //   variables: {
+  //     detid: p_chk.rowid ,
+  //     res : p_chk.result ,
+  //     reg : p_chk.realg ,
+  //     req : p_chk.realq
+  //     },
+  //   }).subscribe(({ data }) => {
+  //     console.log('updated detail', data);
+  //   },(error) => {
+  //     console.log('error UpdateDetail', error);
+  //   });
+  // }
 
 }
