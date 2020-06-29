@@ -180,12 +180,12 @@ export class ChktblComponent implements OnInit {
     this.dataSource.filterPredicate = (data: Chktbl, filtersJson: string) => {
       const matchFilter = [];
       const filters = JSON.parse(filtersJson);
-      console.log("update",data);
-      console.log("update_fil",filtersJson);
+      // console.log("update",data);
+      // console.log("update_fil",filtersJson);
       
         // console.log("update_fil",filtersJson);
       filters.forEach(filter => {
-        console.log("update_fil",filter.value);  
+        // console.log("update_fil",filter.value);  
         if (typeof filter.value != 'undefined') {
           const val = data[filter.id] === null ? '' : data[filter.id];
           matchFilter.push(val.toLowerCase().includes(filter.value.toLowerCase()));
